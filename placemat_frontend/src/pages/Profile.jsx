@@ -10,12 +10,7 @@ import {
   Target,
   Sparkles,
   CheckCircle2,
-  XCircle,
   Trophy,
-  Zap,
-  Brain,
-  Clock,
-  BarChart3,
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
@@ -33,7 +28,6 @@ export default function Profile() {
 
   /* =========================
      TEMP USER DATA
-     (Replace with API later)
      ========================= */
   const user = {
     name: "Arjun Patel",
@@ -86,23 +80,30 @@ export default function Profile() {
     },
   ];
 
+  const topicAnalysis = [
+    { name: "Quantitative Aptitude", value: 82, tests: 12 },
+    { name: "Logical Reasoning", value: 75, tests: 12 },
+    { name: "Verbal Ability", value: 68, tests: 8 },
+    { name: "Arrays", value: 78, tests: 10 },
+    { name: "Dynamic Programming", value: 58, tests: 6 },
+    { name: "Trees & Graphs", value: 72, tests: 9 },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-50">
       {/* HEADER */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/dashbord")}>
-              <ChevronLeft />
-            </Button>
-            <h1 className="text-2xl font-semibold">My Profile</h1>
-          </div>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-3">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/dashbord")}>
+            <ChevronLeft />
+          </Button>
+          <h1 className="text-2xl font-semibold">My Profile</h1>
         </div>
       </header>
 
       {/* MAIN */}
       <main className="max-w-7xl mx-auto p-6 space-y-8">
-        {/* PROFILE HEADER */}
+        {/* PROFILE CARD */}
         <Card className="p-8 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white">
           <div className="flex flex-col md:flex-row justify-between gap-6">
             <div className="flex gap-6">
@@ -140,25 +141,28 @@ export default function Profile() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Stat icon={<Trophy />} label="Global Rank" value={`#${stats.rank}`} />
           <Stat icon={<Target />} label="Avg Score" value={`${stats.avgScore}%`} />
-          <Stat icon={<CheckCircle2 />} label="Completed" value={`${stats.completed}/${stats.total}`} />
+          <Stat
+            icon={<CheckCircle2 />}
+            label="Tests Completed"
+            value={`${stats.completed}/${stats.total}`}
+          />
           <Stat icon={<Award />} label="Percentile" value={`${stats.percentile}%`} />
         </div>
 
-        {/* AI ANALYSIS */}
-        <Card className="p-6 rounded-2xl border-purple-200 border">
+        {/* AI PERFORMANCE */}
+        <Card className="p-6 rounded-2xl border border-purple-200">
           <div className="flex gap-4 mb-4">
             <Sparkles className="text-purple-600" />
             <div>
               <h3 className="text-xl font-semibold">AI Performance Analysis</h3>
-              <p className="text-gray-600 mt-1">
-                You're performing well overall. Focus more on Dynamic Programming
-                and Verbal Ability for faster growth.
+              <p className="text-gray-600">
+                You're performing well overall with a {stats.avgScore}% average score.
               </p>
             </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
-            <ProgressCard label="Pass Rate" value={stats.passRate} />
+            <ProgressCard label="Pass Rate" value={stats.passRate} right={`${stats.passRate}%`} />
             <ProgressCard label="Problems Solved" value={75} right={stats.solved} />
             <ProgressCard label="Time Spent" value={60} right={stats.timeSpent} />
           </div>
@@ -172,10 +176,10 @@ export default function Profile() {
             <TabsTrigger value="ai">AI Insights</TabsTrigger>
           </TabsList>
 
-          {/* TESTS */}
-          <TabsContent value="tests" className="space-y-6">
+          {/* TEST PERFORMANCE */}
+          <TabsContent value="tests" className="space-y-10">
             {tests.map((test, i) => (
-              <Card key={i} className="p-6 rounded-xl">
+              <Card key={i} className="p-6 rounded-2xl">
                 <div className="flex justify-between mb-4">
                   <div>
                     <h4 className="text-xl font-semibold">{test.name}</h4>
@@ -186,21 +190,21 @@ export default function Profile() {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-4 gap-4 text-sm mb-4">
+                <div className="grid md:grid-cols-4 gap-4 text-sm mb-6">
                   <Info label="Rank" value={test.rank} />
                   <Info label="Attempted" value={test.attempted} />
-                  <Info label="Time" value={test.time} />
+                  <Info label="Time Taken" value={test.time} />
                   <Info label="Percentile" value={test.percentile} />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {test.topics.map((t, idx) => (
                     <div key={idx}>
                       <div className="flex justify-between text-sm">
                         <span>{t.name}</span>
                         <span>{t.value}%</span>
                       </div>
-                      <Progress value={t.value} />
+                      <Progress value={t.value} className="h-2" />
                     </div>
                   ))}
                 </div>
@@ -208,11 +212,74 @@ export default function Profile() {
             ))}
           </TabsContent>
 
+          {/* TOPIC ANALYSIS */}
+          <TabsContent value="topics" className="space-y-6">
+            <Card className="p-6 rounded-2xl">
+              <h3 className="text-2xl font-semibold mb-6">
+                Topic-wise Performance
+              </h3>
+
+              <div className="space-y-6">
+                {topicAnalysis.map((topic, i) => {
+                  const status =
+                    topic.value >= 80
+                      ? "Strong"
+                      : topic.value >= 70
+                      ? "Good"
+                      : "Average";
+
+                  return (
+                    <div key={i} className="p-6 bg-gray-50 rounded-xl">
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <div className="flex items-center gap-3">
+                            <h4 className="text-lg font-semibold">{topic.name}</h4>
+                            <Badge
+                              className={
+                                status === "Strong"
+                                  ? "bg-green-100 text-green-700"
+                                  : status === "Good"
+                                  ? "bg-blue-100 text-blue-700"
+                                  : "bg-yellow-100 text-yellow-700"
+                              }
+                            >
+                              {status}
+                            </Badge>
+                            <TrendingUp
+                              size={16}
+                              className={
+                                topic.value >= 70
+                                  ? "text-green-600"
+                                  : "text-red-600 rotate-180"
+                              }
+                            />
+                          </div>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {topic.tests} tests taken
+                          </p>
+                        </div>
+
+                        <div className="text-right">
+                          <div className="text-3xl font-bold text-purple-600">
+                            {topic.value}%
+                          </div>
+                          <p className="text-sm text-gray-500">Average</p>
+                        </div>
+                      </div>
+
+                      <Progress value={topic.value} className="h-3" />
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+          </TabsContent>
+
           {/* AI TAB */}
           <TabsContent value="ai">
             <Alert>
               <AlertDescription>
-                Backend AI insights will be connected here later.
+                Backend AI insights will be connected here.
               </AlertDescription>
             </Alert>
           </TabsContent>
@@ -222,9 +289,7 @@ export default function Profile() {
   );
 }
 
-/* ======================
-   SMALL COMPONENTS
-   ====================== */
+/* ===== SMALL COMPONENTS ===== */
 
 function Stat({ icon, label, value }) {
   return (
@@ -239,20 +304,14 @@ function Stat({ icon, label, value }) {
 function ProgressCard({ label, value, right }) {
   return (
     <div className="bg-white p-4 rounded-xl">
-      <div className="flex justify-between items-center text-sm mb-2">
-        <span className="text-gray-600">{label}</span>
-
-        {/* Show percentage OR right-side value */}
-        <span className="font-semibold text-gray-800">
-          {right ? right : `${value}%`}
-        </span>
+      <div className="flex justify-between text-sm mb-1">
+        <span>{label}</span>
+        <span className="font-semibold">{right}</span>
       </div>
-
-      <Progress value={value} />
+      <Progress value={value} className="h-2" />
     </div>
   );
 }
-
 
 function Info({ label, value }) {
   return (
