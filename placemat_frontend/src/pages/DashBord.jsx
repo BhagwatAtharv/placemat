@@ -84,7 +84,7 @@ export default function DashBord() {
           <nav className="p-4 space-y-2">
 
             <SidebarBtn icon={Menu} text="Dashboard" active onClick={() => navigate("/dashbord")} />
-            <SidebarBtn icon={FileText} text="Test Portal" />
+            <SidebarBtn icon={FileText} text="Test Portal"  onClick={() => navigate("/testportal")} />
             <SidebarBtn icon={Brain} text="Aptitude" />
             <SidebarBtn icon={Code2} text="Coding" />
             <SidebarBtn icon={Trophy} text="Leaderboard" />
