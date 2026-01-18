@@ -47,12 +47,20 @@ const TestCard = ({ test, onNavigate }) => {
             {test.difficulty}
           </Badge>
         }/>
-        <Info label="Type" value={
-          <Badge variant="outline">
-            {test.type === "aptitude" ? <Brain className="w-3 h-3 mr-1" /> : <Code2 className="w-3 h-3 mr-1" />}
-            {test.type}
-          </Badge>
-        }/>
+        <Info
+  label="Type"
+  value={
+    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-medium">
+      {test.type === "aptitude" ? (
+        <Brain className="w-4 h-4 text-purple-600" />
+      ) : (
+        <Code2 className="w-4 h-4 text-blue-600" />
+      )}
+      {test.type === "aptitude" ? "Aptitude" : "Coding"}
+    </span>
+  }
+/>
+
       </div>
 
       {/* Date + Negative Marking */}
@@ -72,11 +80,12 @@ const TestCard = ({ test, onNavigate }) => {
 
       {/* Start Button */}
       <Button
-        className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white py-6 text-lg"
-        onClick={handleStartTest}
-      >
-        Start Test
-      </Button>
+  className="w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 text-sm"
+  onClick={handleStartTest}
+>
+  Start Test
+</Button>
+
     </Card>
   );
 };
