@@ -3,20 +3,17 @@ import {
   Brain,
   Trophy,
   User,
-  Bell,
   Search,
   Menu,
   Award,
   TrendingUp,
   Target,
-  Calendar,
   FileText,
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 
 import { Card } from "../components/ui/card";
-import { Button } from "../components/ui/button";
 import { Progress } from "../components/ui/progress";
 import { Input } from "../components/ui/input";
 import { Avatar } from "../components/ui/avatar";
@@ -84,10 +81,17 @@ export default function DashBord() {
           <nav className="p-4 space-y-2">
 
             <SidebarBtn icon={Menu} text="Dashboard" active onClick={() => navigate("/dashbord")} />
-            <SidebarBtn icon={FileText} text="Test Portal"  onClick={() => navigate("/testportal")} />
+            <SidebarBtn icon={FileText} text="Test Portal" onClick={() => navigate("/testportal")} />
             <SidebarBtn icon={Brain} text="Aptitude" />
             <SidebarBtn icon={Code2} text="Coding" />
-            <SidebarBtn icon={Trophy} text="Leaderboard" />
+
+            {/* ✅ FIXED LEADERBOARD */}
+            <SidebarBtn
+              icon={Trophy}
+              text="Leaderboard"
+              onClick={() => navigate("/leaderboard")}
+            />
+
             <SidebarBtn icon={User} text="Profile" onClick={() => navigate("/profile")} />
 
           </nav>
@@ -116,7 +120,6 @@ export default function DashBord() {
 
           {/* PROGRESS */}
           <div className="grid md:grid-cols-2 gap-6">
-
             <Card className="p-6">
               <h3 className="text-2xl mb-4">Aptitude Progress</h3>
               {aptitudeProgress.map((item, i) => (
@@ -142,7 +145,6 @@ export default function DashBord() {
                 </div>
               ))}
             </Card>
-
           </div>
 
         </main>
