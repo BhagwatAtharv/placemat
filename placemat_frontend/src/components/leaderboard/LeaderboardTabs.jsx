@@ -1,26 +1,22 @@
-import { Code2, Brain } from "lucide-react";
-
 export default function LeaderboardTabs({ activeTab, setActiveTab }) {
   return (
-    <div className="inline-flex bg-white p-2 rounded-2xl shadow">
+    <div className="inline-flex bg-gray-100 rounded-xl p-1 mb-8">
       <button
         onClick={() => setActiveTab("coding")}
-        className={`px-6 py-2 rounded-xl flex items-center gap-2 transition
-          ${activeTab === "coding"
-            ? "bg-blue-600 text-white"
-            : "text-gray-700"}`}
+        className={`px-6 py-2 rounded-lg ${
+          activeTab === "coding" ? "bg-blue-600 text-white" : ""
+        }`}
       >
-        <Code2 size={16} /> Coding
+        Coding
       </button>
 
       <button
         onClick={() => setActiveTab("aptitude")}
-        className={`px-6 py-2 rounded-xl flex items-center gap-2 transition
-          ${activeTab === "aptitude"
-            ? "bg-purple-600 text-white"
-            : "text-gray-700"}`}
+        className={`px-6 py-2 rounded-lg ${
+          activeTab === "aptitude" ? "bg-purple-600 text-white" : ""
+        }`}
       >
-        <Brain size={16} /> Aptitude
+        Aptitude
       </button>
     </div>
   );

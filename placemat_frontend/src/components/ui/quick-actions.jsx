@@ -24,12 +24,12 @@ export function QuickActions({ onNavigate }) {
           TCS, Infosys & Amazon tests available now
         </p>
 
-        <Button
-          onClick={() => onNavigate("test-portal")}
-          className="w-full bg-green-600 text-white rounded-xl"
-        >
-          Go to Test Portal
-        </Button>
+             <Button
+               onClick={() => onNavigate("testportal")}
+               className="w-full bg-green-600 text-white rounded-xl">
+                   Go to Test Portal
+             </Button>
+
       </Card>
 
       {/* Daily Challenge */}

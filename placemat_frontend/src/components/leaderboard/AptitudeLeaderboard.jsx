@@ -1,25 +1,21 @@
 import Podium from "./Podium";
 import LeaderboardList from "./LeaderboardList";
 
-const aptitudeUsers = [
-  { rank: 1, name: "DevWarrior", country: "India", score: 2543, solved: 243, streak: 35 },
-  { rank: 2, name: "MindBender", country: "USA", score: 2478, solved: 238, streak: 32 },
-  { rank: 3, name: "LogicAce", country: "UK", score: 2399, solved: 230, streak: 29 },
-  { rank: 4, name: "BugHunter", country: "Canada", score: 2365, solved: 224, streak: 26 },
-  { rank: 5, name: "TreeTraverser", country: "Singapore", score: 2021, solved: 192, streak: 17 },
+const users = [
+  { name: "MindBender", country: "USA", score: 2760, solved: 260, streak: 40 },
+  { name: "LogicAce", country: "UK", score: 2680, solved: 250, streak: 34 },
+  { name: "QuickThinker", country: "India", score: 2600, solved: 240, streak: 30 },
+  { name: "BrainStorm", country: "Canada", score: 2450, solved: 220, streak: 26 },
+  { name: "Arjun Patel", country: "India", score: 2620, solved: 210, streak: 18 },
 ];
 
 export default function AptitudeLeaderboard() {
+  const sorted = [...users].sort((a, b) => b.score - a.score);
+
   return (
     <>
-      {/* 🔥 Top 3 */}
-      <Podium users={aptitudeUsers.slice(0, 3)} />
-
-      {/* 🔥 Full List */}
-      <LeaderboardList
-        title="Top Aptitude Masters"
-        users={aptitudeUsers}
-      />
+      <Podium users={sorted.slice(0, 3)} />
+      <LeaderboardList title="Top Aptitude Masters" users={sorted} currentUser="Arjun Patel" />
     </>
   );
 }
